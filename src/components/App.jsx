@@ -16,6 +16,7 @@ import {
   selectIsLoading,
 } from 'redux/selectors';
 import { fetchContacts } from 'redux/operations';
+import Loader from './Loader/Loader';
 
 export default function App() {
   const dispatch = useDispatch(); // Logistic function
@@ -64,12 +65,16 @@ export default function App() {
   return (
     <div>
       <Form onSubmit={handlerFormSubmit} title="Phonebook"></Form>
-      <Filter filter={filter} changeFilter={changeFilter}></Filter>
+      {contacts.length > 0 && !isLoading && (
+        <Filter filter={filter} changeFilter={changeFilter}></Filter>
+      )}
       <ContactsList
         contacts={value}
         title="Contacts"
         deleteContact={onDeleteContact}
       ></ContactsList>
+      {isLoading && <Loader />}
+      {error && <p>Error: {error}</p>}
     </div>
   );
 }

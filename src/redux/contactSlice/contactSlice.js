@@ -54,21 +54,6 @@ const contactsSlice = createSlice({
       });
   },
 
-  // extraReducers: {
-  //   [fetchContacts.pending](state) {
-  //     state.isLoading = true;
-  //   },
-  //   [fetchContacts.fulfilled](state, action) {
-  //     state.isLoading = false;
-  //     state.error = null;
-  //     state.contacts = action.payload;
-  //   },
-  //   [fetchContacts.rejected](state, action) {
-  //     state.isLoading = false;
-  //     state.error = action.payload;
-  //   },
-  // },
-
   // Объект редюсеров
   reducers: {
     setFilter(state, action) {
@@ -79,6 +64,8 @@ const contactsSlice = createSlice({
 
 // Генераторы экшенов(instructions)
 export const { addContact, deleteContact, setFilter } = contactsSlice.actions;
+// export const { setFilter } = contactsSlice.actions;
+
 // Редюсер слайса
 export const contactsReducer = contactsSlice.reducer;
 
