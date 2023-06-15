@@ -14,36 +14,65 @@ const initialState = {
 const contactsSlice = createSlice({
   name: 'contacts',
   initialState,
-  // Объект редюсеров
 
-  // reducers: {
-  //   addContact(state, action) {
-  //     // action -> { type: "contact/addContact", payload } - {name: "Olek", number: "+12354", id: "1337"}
-  //     state.contacts = [...state.contacts, action.payload];
+  extraReducers: builder => {
+    builder
+      .addCase(fetchContacts.pending, state => {
+        state.isLoading = true;
+      })
+      .addCase(fetchContacts.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+        state.contacts = action.payload;
+      })
+      .addCase(fetchContacts.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+      .addCase(addContact.pending, state => {
+        state.isLoading = true;
+      })
+      .addCase(addContact.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+        state.contacts.push(action.payload);
+        // return {...state, contacts: [...state.contacts, ...action.payload]};
+      })
+      .addCase(addContact.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+      .addCase(deleteContact.pending, state => {
+        state.isLoading = true;
+      })
+      .addCase(deleteContact.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+        state.contacts = state.contacts.filter(
+          contact => contact.id !== action.payload
+        );
+      });
+  },
+
+  // extraReducers: {
+  //   [fetchContacts.pending](state) {
+  //     state.isLoading = true;
   //   },
-  //   deleteContact(state, action) {
-  //     state.contacts = state.contacts.filter(
-  //       contact => contact.id !== action.payload
-  //     );
+  //   [fetchContacts.fulfilled](state, action) {
+  //     state.isLoading = false;
+  //     state.error = null;
+  //     state.contacts = action.payload;
   //   },
-  //   setFilter(state, action) {
-  //     state.filter = action.payload;
+  //   [fetchContacts.rejected](state, action) {
+  //     state.isLoading = false;
+  //     state.error = action.payload;
   //   },
   // },
 
-  extraReducers: {
-    [fetchContacts.pending](state) {
-      state.isLoading = true;
-    },
-    [fetchContacts.fulfilled](state, action) {
-      state.isLoading = false;
-      state.error = null;
-      state.contacts = action.payload;
-      // return {...state, contacts: [...state.contacts, ...action.payload]};
-    },
-    [fetchContacts.rejected](state, action) {
-      state.isLoading = false;
-      state.error = action.payload;
+  // Объект редюсеров
+  reducers: {
+    setFilter(state, action) {
+      state.filter = action.payload;
     },
   },
 });

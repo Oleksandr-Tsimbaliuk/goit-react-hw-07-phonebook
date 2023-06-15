@@ -9,7 +9,12 @@ import {
   deleteContact,
   setFilter,
 } from 'redux/contactSlice/contactSlice';
-import { selectContacts, selectFilter } from 'redux/selectors';
+import {
+  selectContacts,
+  selectError,
+  selectFilter,
+  selectIsLoading,
+} from 'redux/selectors';
 import { fetchContacts } from 'redux/operations';
 
 export default function App() {
@@ -17,6 +22,8 @@ export default function App() {
   // We subscribe on conrete field in our store.
   const contacts = useSelector(selectContacts);
   const filter = useSelector(selectFilter);
+  const error = useSelector(selectError);
+  const isLoading = useSelector(selectIsLoading);
 
   useEffect(() => {
     dispatch(fetchContacts());
