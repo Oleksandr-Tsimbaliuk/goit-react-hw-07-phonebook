@@ -2,18 +2,21 @@ import { createSlice } from '@reduxjs/toolkit';
 import { fetchContacts } from 'redux/operations';
 
 // Начальное состояние редюсера слайса
-const initialState = {
-  contacts: {
-    contacts: [],
-    isLoading: false,
-    error: null,
-  },
-  filter: '',
-};
+// const initialState = {
+//   contacts: [],
+//   isLoading: false,
+//   error: null,
+//   filter: '',
+// };
 
 const contactsSlice = createSlice({
   name: 'contacts',
-  initialState,
+  initialState: {
+    contacts: [],
+    isLoading: false,
+    error: null,
+    // filter: '',
+  },
 
   extraReducers: builder => {
     builder
@@ -59,11 +62,11 @@ const contactsSlice = createSlice({
   },
 
   // Объект редюсеров
-  reducers: {
-    setFilter(state, action) {
-      state.filter = action.payload;
-    },
-  },
+  // reducers: {
+  //   setFilter(state, action) {
+  //     state.filter = action.payload;
+  //   },
+  // },
 });
 
 // Генераторы экшенов(instructions)
