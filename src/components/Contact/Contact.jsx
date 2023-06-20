@@ -3,20 +3,18 @@ import PropTypes from 'prop-types';
 
 function Contact({ name, id, number, deleteContact }) {
   return (
-    <li>
-      <div>
-        <p>
-          {name}: <span>{number}</span>
-        </p>
-        <button
-          type="button"
-          onClick={() => {
-            deleteContact(id);
-          }}
-        >
-          Delete
-        </button>
-      </div>
+    <li key={id}>
+      <p>
+        {name}: <span>{number}</span>
+      </p>
+      <button
+        type="button"
+        onClick={() => {
+          deleteContact(id);
+        }}
+      >
+        Delete
+      </button>
     </li>
   );
 }
