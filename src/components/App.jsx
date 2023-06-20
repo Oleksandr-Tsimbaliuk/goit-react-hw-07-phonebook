@@ -5,17 +5,12 @@ import ContactsList from './ContactsList';
 import Filter from './Filter';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  addContact,
-  deleteContact,
-  setFilter,
-} from 'redux/contactSlice/contactSlice';
-import {
   selectContacts,
   selectError,
   selectFilter,
   selectIsLoading,
 } from 'redux/selectors';
-import { fetchContacts } from 'redux/operations';
+import { deleteContactThunk, fetchContacts } from 'redux/operations';
 import Loader from './Loader/Loader';
 
 export default function App() {
@@ -30,46 +25,30 @@ export default function App() {
     dispatch(fetchContacts());
   }, [dispatch]);
 
-  const handlerFormSubmit = contactData => {
-    if (contacts.some(contact => contact.name === contactData.name)) {
-      alert(`Contact whith name ${contactData.name} is already exists`);
-      return;
-    }
-
-    dispatch(
-      addContact(contactData)
-      //   {type: "contacts/addContact", payload: contactData}
-    );
-    //setContacts(prevContacts => [...prevContacts, contactData]);
-  };
-
   const changeFilter = event => {
-    dispatch(setFilter(event.currentTarget.value));
-    // setFilter(event.currentTarget.value);
+    dispatch(selectFilter(event.currentTarget.value));
   };
 
-  const filteredContacts = () => {
-    return contacts.filter(({ name, number }) =>
-      name?.toLowerCase().includes(filter.toLowerCase())
-    );
-  };
+  // const filteredContacts = () => {
+  //   return contacts.filter(({ name, number }) =>
+  //     name?.toLowerCase().includes(filter.toLowerCase())
+  //   );
+  // };
 
   const onDeleteContact = contactId => {
-    dispatch(deleteContact(contactId));
-    // setContacts(prevContacts =>
-    //   prevContacts.filter(contact => contact.id !== contactId)
-    // );
+    dispatch(deleteContactThunk(contactId));
   };
 
-  const value = filteredContacts();
+  // const value = filteredContacts();
   return (
     <div>
-      <Form onSubmit={handlerFormSubmit} title="Phonebook"></Form>
+      <Form title="Phonebook"></Form>
       {contacts.length > 0 && !isLoading && (
         <Filter filter={filter} changeFilter={changeFilter}></Filter>
       )}
       <ContactsList
-        contacts={value}
+        // contacts={value}
+        contacts={contacts}
         title="Contacts"
         deleteContact={onDeleteContact}
       ></ContactsList>

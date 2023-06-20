@@ -1,13 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchContacts } from 'redux/operations';
-
-// Начальное состояние редюсера слайса
-// const initialState = {
-//   contacts: [],
-//   isLoading: false,
-//   error: null,
-//   filter: '',
-// };
+import {
+  addContactThunk,
+  deleteContactThunk,
+  fetchContacts,
+} from './operations';
 
 const contactsSlice = createSlice({
   name: 'contacts',
@@ -15,7 +11,7 @@ const contactsSlice = createSlice({
     contacts: [],
     isLoading: false,
     error: null,
-    // filter: '',
+    filter: '',
   },
 
   extraReducers: builder => {
@@ -32,45 +28,46 @@ const contactsSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       })
-      .addCase(addContact.pending, state => {
+      .addCase(addContactThunk.pending, state => {
         state.isLoading = true;
       })
-      .addCase(addContact.fulfilled, (state, action) => {
+      .addCase(addContactThunk.fulfilled, (state, action) => {
         state.isLoading = false;
         state.error = null;
-        state.contacts.push(action.payload);
+        state.contacts = [...state.contacts, action.payload];
+        // state.contacts.push(action.payload);
         // return {...state, contacts: [...state.contacts, ...action.payload]};
       })
-      .addCase(addContact.rejected, (state, action) => {
+      .addCase(addContactThunk.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       })
-      .addCase(deleteContact.pending, state => {
+      .addCase(deleteContactThunk.pending, state => {
         state.isLoading = true;
       })
-      .addCase(deleteContact.fulfilled, (state, action) => {
+      .addCase(deleteContactThunk.fulfilled, (state, action) => {
         state.isLoading = false;
         state.error = null;
         state.contacts = state.contacts.filter(
           contact => contact.id !== action.payload
         );
       })
-      .addCase(deleteContact.rejected, (state, action) => {
+      .addCase(deleteContactThunk.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       });
   },
 
   // Объект редюсеров
-  // reducers: {
-  //   setFilter(state, action) {
-  //     state.filter = action.payload;
-  //   },
-  // },
+  reducers: {
+    setFilter(state, action) {
+      state.filter = action.payload;
+    },
+  },
 });
 
 // Генераторы экшенов(instructions)
-export const { addContact, deleteContact, setFilter } = contactsSlice.actions;
+// export const { addContact, deleteContact, setFilter } = contactsSlice.actions;
 // export const { setFilter } = contactsSlice.actions;
 
 // Редюсер слайса

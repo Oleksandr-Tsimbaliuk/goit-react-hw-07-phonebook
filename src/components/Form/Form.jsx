@@ -2,16 +2,24 @@ import { useState } from 'react';
 import { StyledForm } from './Form.styled';
 import { nanoid } from 'nanoid';
 import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectContacts } from 'redux/selectors';
+import { addContactThunk } from 'redux/operations';
 
 export default function Form({ title, onSubmit }) {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
+  const dispatch = useDispatch();
+  const contacts = useSelector(selectContacts);
+
   const handleChange = event => {
     const { name, value } = event.target;
     if (name === 'name') {
       setName(value);
-    } else if (name === 'number') setNumber(value);
+    } else if (name === 'number') {
+      setNumber(value);
+    }
   };
 
   const handleSubmit = event => {
@@ -22,11 +30,28 @@ export default function Form({ title, onSubmit }) {
       number: number,
       id: nanoid(),
     };
+    const loveredContactData = contactData.name.toLowerCase();
+    const isContactExist = contacts.some(
+      contact => contact.name.toLowerCase() === loveredContactData
+    );
+    const resetInputForm = () => {
+      setName('');
+      setNumber('');
+    };
 
-    onSubmit(contactData);
+    if (isContactExist) {
+      alert(`Contact whith name ${contactData.name} is already exists`);
+      return;
+    }
 
-    setName('');
-    setNumber('');
+    dispatch(
+      addContactThunk(contactData)
+      //   {type: "contacts/addContact", payload: contactData}
+    );
+    alert(
+      `Contact whith name ${contactData.name} successfully added to phonebook!`
+    );
+    resetInputForm();
   };
 
   return (
