@@ -1,12 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectError } from 'redux/selectors';
 
 function Contact({ name, id, phone, deleteContact }) {
-  const dispatch = useDispatch();
-  const contacts = useSelector(selectError);
-
   return (
     <li key={id}>
       <p>
