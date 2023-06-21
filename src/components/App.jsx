@@ -1,4 +1,3 @@
-// import { useEffect } from 'react';
 import React, { useEffect } from 'react';
 import Form from './Form';
 import ContactsList from './ContactsList';
@@ -12,6 +11,7 @@ import {
 } from 'redux/selectors';
 import { deleteContactThunk, fetchContacts } from 'redux/operations';
 import Loader from './Loader/Loader';
+import { setFilter } from 'redux/contactSlice';
 
 export default function App() {
   const dispatch = useDispatch(); // Logistic function
@@ -26,20 +26,20 @@ export default function App() {
   }, [dispatch]);
 
   const changeFilter = event => {
-    dispatch(selectFilter(event.currentTarget.value));
+    dispatch(setFilter(event.currentTarget.value));
   };
 
-  // const filteredContacts = () => {
-  //   return contacts.filter(({ name, number }) =>
-  //     name?.toLowerCase().includes(filter.toLowerCase())
-  //   );
-  // };
+  const filteredContacts = () => {
+    return contacts.filter(({ name, number }) =>
+      name?.toLowerCase().includes(filter.toLowerCase())
+    );
+  };
 
   const onDeleteContact = contactId => {
     dispatch(deleteContactThunk(contactId));
   };
 
-  // const value = filteredContacts();
+  const value = filteredContacts();
   return (
     <div>
       <Form title="Phonebook"></Form>
@@ -47,8 +47,8 @@ export default function App() {
         <Filter filter={filter} changeFilter={changeFilter}></Filter>
       )}
       <ContactsList
-        // contacts={value}
-        contacts={contacts}
+        contacts={value}
+        // contacts={contacts}
         title="Contacts"
         deleteContact={onDeleteContact}
       ></ContactsList>
