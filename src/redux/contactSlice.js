@@ -61,7 +61,7 @@ const contactsSlice = createSlice({
   // Объект редюсеров
   reducers: {
     setFilter(state, action) {
-      state.filter = action.payload;
+      state.filter = action.payload.toLowerCase();
     },
   },
 });

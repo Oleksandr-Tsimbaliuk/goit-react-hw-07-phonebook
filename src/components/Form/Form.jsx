@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { StyledForm } from './Form.styled';
 import { nanoid } from 'nanoid';
-import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectContacts } from 'redux/selectors';
 import { addContactThunk } from 'redux/operations';
+import PropTypes from 'prop-types';
 
-export default function Form({ title, onSubmit }) {
+export default function Form({ title }) {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
 
@@ -21,7 +21,6 @@ export default function Form({ title, onSubmit }) {
       setPhone(value);
     }
   };
-
   const handleSubmit = event => {
     event.preventDefault();
 
@@ -62,7 +61,8 @@ export default function Form({ title, onSubmit }) {
         <input
           type="text"
           name="name"
-          pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+          id="contactName"
+          pattern="^[a-zA-Za-яА-Я]+(([' \\\-][a-zA-Za-яА-Я ])?[a-zA-Za-яА-Я]*)*$"
           title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
           required
           value={name}
@@ -75,7 +75,8 @@ export default function Form({ title, onSubmit }) {
         <input
           type="tel"
           name="phone"
-          pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+          id="ContactNumber"
+          pattern="\+?\d{1,4}[-.\s]?\(?\d{1,3}\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           required
           value={phone}
@@ -84,7 +85,7 @@ export default function Form({ title, onSubmit }) {
       </label>
 
       <button className="form-btn" type="submit">
-        add contact
+        Add contact
       </button>
     </StyledForm>
   );
