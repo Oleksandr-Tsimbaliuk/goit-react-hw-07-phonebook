@@ -8,7 +8,7 @@ import { addContactThunk } from 'redux/operations';
 
 export default function Form({ title, onSubmit }) {
   const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
+  const [phone, setPhone] = useState('');
 
   const dispatch = useDispatch();
   const contacts = useSelector(selectContacts);
@@ -17,8 +17,8 @@ export default function Form({ title, onSubmit }) {
     const { name, value } = event.target;
     if (name === 'name') {
       setName(value);
-    } else if (name === 'number') {
-      setNumber(value);
+    } else if (name === 'phone') {
+      setPhone(value);
     }
   };
 
@@ -27,7 +27,7 @@ export default function Form({ title, onSubmit }) {
 
     const contactData = {
       name: name,
-      number: number,
+      phone: phone,
       id: nanoid(),
     };
     const loveredContactData = contactData.name.toLowerCase();
@@ -36,7 +36,7 @@ export default function Form({ title, onSubmit }) {
     );
     const resetInputForm = () => {
       setName('');
-      setNumber('');
+      setPhone('');
     };
 
     if (isContactExist) {
@@ -74,11 +74,11 @@ export default function Form({ title, onSubmit }) {
         <span>Number</span>
         <input
           type="tel"
-          name="number"
+          name="phone"
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           required
-          value={number}
+          value={phone}
           onChange={handleChange}
         />
       </label>

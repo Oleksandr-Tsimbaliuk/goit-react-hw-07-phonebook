@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function Contact({ name, id, number, deleteContact }) {
+function Contact({ name, id, phone, deleteContact }) {
   return (
     <li key={id}>
       <p>
-        {name}: <span>{number}</span>
+        {name}: <span>{phone}</span>
       </p>
       <button
         type="button"

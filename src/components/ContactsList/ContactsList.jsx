@@ -8,13 +8,13 @@ function ContactsList({ title, contacts, deleteContact }) {
     <>
       <StyledContactsTitle>{title}</StyledContactsTitle>
       <StyledContactsList>
-        {contacts.map(({ name, id, number }) => {
+        {contacts.map(({ name, id, phone }) => {
           return (
             <Contact
               key={id}
               name={name}
               id={id}
-              number={number}
+              phone={phone}
               deleteContact={deleteContact}
             ></Contact>
           );
