@@ -1,7 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { deleteContactThunk } from 'redux/operations';
+import { useDispatch } from 'react-redux';
 
-function Contact({ name, id, phone, deleteContact }) {
+function Contact({ name, id, phone }) {
+  const dispatch = useDispatch();
+
+  const deleteContact = contactId => {
+    dispatch(deleteContactThunk(contactId));
+  };
+
+  
   return (
     <li key={id}>
       <p>

@@ -9,7 +9,7 @@ import {
   selectFilter,
   selectIsLoading,
 } from 'redux/selectors';
-import { deleteContactThunk, fetchContacts } from 'redux/operations';
+import { fetchContacts } from 'redux/operations';
 import Loader from './Loader/Loader';
 import { setFilter } from 'redux/contactSlice';
 
@@ -35,10 +35,6 @@ export default function App() {
     );
   };
 
-  const onDeleteContact = contactId => {
-    dispatch(deleteContactThunk(contactId));
-  };
-
   const value = filteredContacts();
   return (
     <div>
@@ -50,7 +46,6 @@ export default function App() {
         contacts={value}
         // contacts={contacts}
         title="Contacts"
-        deleteContact={onDeleteContact}
       ></ContactsList>
       {isLoading && <Loader />}
       {error && <p>Error: {error}</p>}
